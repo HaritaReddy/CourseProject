@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
+import pickle
 
 import config
 
@@ -43,7 +44,8 @@ class CourseScraper:
             sublinks = []
 
             for list_item in list_items:
-                sublinks.append(list_item.findAll('a')[0]['href'])
+                if len(list_item.findAll('a')) > 0:
+                    sublinks.append(list_item.findAll('a')[0]['href'])
 
             return sublinks
 
@@ -51,29 +53,31 @@ class CourseScraper:
         
 
     def scrapeAllPages(self):
-        all_sublinks = []
+        all_universities_courses = {}
 
         for university in self.list_of_universities:
+            all_universities_courses[university] = []
             page_content = self.getPageContent(self.getPageURL(university))
             sublinks = self.getSubLinks(page_content)
             for i in range(0, len(sublinks)):
                 sublinks[i] = self.getParentURL(self.getPageURL(university)) + sublinks[i]
-            all_sublinks.append(sublinks)
-            break
+            
+            for sublink in sublinks:
+                soup = BeautifulSoup(course_scraper.getPageContent(sublink), "lxml")
+                courses = soup.find_all(class_="courseblock")
+                for course in courses:
+                    all_universities_courses[university].append(course.get_text() + ' ' + sublink)
 
-        return all_sublinks 
+        return all_universities_courses
 
 
 if __name__ == "__main__":
     course_scraper = CourseScraper()
-    all_sublinks = course_scraper.scrapeAllPages()
+    all_universities_courses = course_scraper.scrapeAllPages()
 
-    for uni_link in all_sublinks:
-        for link in uni_link:
-            soup = BeautifulSoup(course_scraper.getPageContent(link), "lxml")
-            courses = soup.find_all(class_="courseblock")
-            for course in courses:
-                print('-----------------------------------------')
-                print(course.get_text())
-                print('-----------------------------------------')
+    print(all_universities_courses['CMU'])
+    print(all_universities_courses['UIUC'])
+
+    with open('all_universities_courses.pickle', 'wb') as handle:
+        pickle.dump(all_universities_courses, handle, protocol=pickle.HIGHEST_PROTOCOL)
     
