@@ -73,11 +73,26 @@ class CourseScraper:
 
 if __name__ == "__main__":
     course_scraper = CourseScraper()
-    all_universities_courses = course_scraper.scrapeAllPages()
+    #all_universities_courses = course_scraper.scrapeAllPages()
 
-    print(all_universities_courses['CMU'])
-    print(all_universities_courses['UIUC'])
+    """
+    with open('course_catalogs/UCB.pickle', 'wb') as handle:
+        pickle.dump(all_universities_courses['UCB'], handle, protocol=pickle.HIGHEST_PROTOCOL)
 
+    with open('course_catalogs/CMU.pickle', 'wb') as handle:
+        pickle.dump(all_universities_courses['CMU'], handle, protocol=pickle.HIGHEST_PROTOCOL)
+
+    with open('course_catalogs/UIUC.pickle', 'wb') as handle:
+        pickle.dump(all_universities_courses['UIUC'], handle, protocol=pickle.HIGHEST_PROTOCOL)
+
+    with open('course_catalogs/GATECH.pickle', 'wb') as handle:
+        pickle.dump(all_universities_courses['GATECH'], handle, protocol=pickle.HIGHEST_PROTOCOL)
+
+    with open('course_catalogs/UW.pickle', 'wb') as handle:
+        pickle.dump(all_universities_courses['UW'], handle, protocol=pickle.HIGHEST_PROTOCOL)
+    """
+    """
     with open('all_universities_courses.pickle', 'wb') as handle:
         pickle.dump(all_universities_courses, handle, protocol=pickle.HIGHEST_PROTOCOL)
+    """
     

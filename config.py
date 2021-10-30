@@ -1,9 +1,13 @@
 
 # List of Universities
-list_of_universities = ["CMU", "UIUC"]
+list_of_universities = ["CMU", "UIUC", "GATECH", "UW", "UCB"]
 
 # Dictionary to map university name to course catalog main page of the university
+
 university_course_pages = {
     'CMU': 'http://coursecatalog.web.cmu.edu/coursedescriptions/',
-    'UIUC': 'http://catalog.illinois.edu/courses-of-instruction/'
+    'UIUC': 'http://catalog.illinois.edu/courses-of-instruction/',
+    'GATECH': 'https://catalog.gatech.edu/coursesaz/',
+    'UW': 'https://guide.wisc.edu/courses/',
+    'UCB': 'http://guide.berkeley.edu/courses/'
 }
