@@ -76,6 +76,21 @@ if __name__ == "__main__":
     #all_universities_courses = course_scraper.scrapeAllPages()
 
     """
+    with open('course_catalogs/NE.pickle', 'wb') as handle:
+        pickle.dump(all_universities_courses['NE'], handle, protocol=pickle.HIGHEST_PROTOCOL)
+    
+    with open('course_catalogs/CUB.pickle', 'wb') as handle:
+        pickle.dump(all_universities_courses['CUB'], handle, protocol=pickle.HIGHEST_PROTOCOL)
+    
+    with open('course_catalogs/UCI.pickle', 'wb') as handle:
+        pickle.dump(all_universities_courses['UCI'], handle, protocol=pickle.HIGHEST_PROTOCOL)
+    
+    with open('course_catalogs/UNC.pickle', 'wb') as handle:
+        pickle.dump(all_universities_courses['UNC'], handle, protocol=pickle.HIGHEST_PROTOCOL)
+    
+    with open('course_catalogs/MIT.pickle', 'wb') as handle:
+        pickle.dump(all_universities_courses['MIT'], handle, protocol=pickle.HIGHEST_PROTOCOL)
+    
     with open('course_catalogs/UCB.pickle', 'wb') as handle:
         pickle.dump(all_universities_courses['UCB'], handle, protocol=pickle.HIGHEST_PROTOCOL)
 
