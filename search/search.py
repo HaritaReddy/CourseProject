@@ -8,7 +8,30 @@ import pytoml
 def load_ranker():
     return metapy.index.OkapiBM25(k1=1.524, k3=2.29)
 
+def get_relevant_docs(input_query, top_k):
+    ranker = load_ranker()
+
+    with open('config-search.toml', 'r') as fin:
+        cfg_d = pytoml.load(fin)
+
+    query_cfg = cfg_d['query-runner']
+
+    idx = metapy.index.make_inverted_index('config-search.toml')
+
+    query = metapy.index.Document()
+
+    print('Running course query')
+    query.content(input_query.strip())
+    results = ranker.score(idx, query, top_k)
+    content_results = []
+    for item in results:
+        content_results.append(idx.metadata(item[0]).get('content'))
+
+    return content_results
+
 if __name__ == '__main__':
+    print(get_relevant_docs('spanish colonial rule', 5))
+
     """
     print('Building or loading index...')
     idx = metapy.index.make_inverted_index('config.toml')
@@ -51,10 +74,10 @@ if __name__ == '__main__':
 
     print("NDCG@{}: {}".format(top_k, ndcg))
     print("Elapsed: {} seconds".format(round(time.time() - start_time, 4)))
-    """
-    """
-    Testing on courses dataset
-    """
+    
+    
+    #Testing on courses dataset
+    
     ranker = load_ranker()
     #ev = metapy.index.IREval('config-search.toml')
 
@@ -91,3 +114,4 @@ if __name__ == '__main__':
     
     #print("NDCG@{}: {}".format(top_k, ndcg))
     #print("Elapsed: {} seconds".format(round(time.time() - start_time, 4)))
+    """
