@@ -13,12 +13,13 @@ class MainViewModel {
 
 
     fun fetchResults(searchTerm: String){
-
+        println("Got search request")
         val fakeList = listOf(
             Course(courseNumber = "CS100", courseDescription = "the study of forces, their distribution, and their impact on building structure. Topics include: equilibrium of rigid bodies in two and three dimensions"),
             Course(courseNumber = "ECE100", courseDescription = "This course explores the theoretical and practical foundations of architecture and the built environment. It provides an introduction to the architectural graphic communication skills that architects"),
             Course(courseNumber = "ART509", courseDescription = "Presentations and discussions relative to various areas of architectural and environmental design concerns. May be repeated to a maximum of 15 hours.")
         )
+        println(" about to send $fakeList")
 
         _viewStates.tryEmit(ViewState(PageType.HOME, fakeList))
 

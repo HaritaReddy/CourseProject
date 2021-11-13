@@ -61,7 +61,9 @@ fun HomeScreen(
             Text("Clear")
         }
 
-        Button({onClick { onSubmitClicked(searchTerm) }}){
+        Button({onClick {
+            println("Search Clicked")
+            onSubmitClicked(searchTerm) }}){
             Text("Submit")
         }
     }
