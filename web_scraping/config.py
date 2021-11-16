@@ -19,6 +19,8 @@ university_course_pages = {
 
 # Dictionary to map university name to program pages
 university_program_pages = {
-    'UIUC': ('http://catalog.illinois.edu/undergraduate-programs/', {'id': 'atozindex'}, {'id': 'textcontainer'})
+    'UIUC': ('http://catalog.illinois.edu/undergraduate-programs/', {'id': 'atozindex'}, {'id': 'textcontainer'}),
+    'GATECH': ('https://catalog.gatech.edu/programs/', {'id': 'alltextcontainer'}, {'id': 'bodyt'})
 }
+
 

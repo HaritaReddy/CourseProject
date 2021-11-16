@@ -76,20 +76,28 @@ class ProgramScraper:
             sublinks = self.getSubLinks(page_content, self.getSublinkClassOrID(university))
             for i in range(0, len(sublinks)):
                 sublinks[i] = self.getParentURL(self.getPageURL(university)) + sublinks[i]
-            
-            
-            for sublink in sublinks:
-                soup = BeautifulSoup(self.getPageContent(sublink), "lxml")
-                program_content = soup.findAll('p')
-                
-                complete_program_content = ""
 
-                for item in program_content:
-                    complete_program_content = complete_program_content + item.get_text()
+            if university == "GATECH":
+                for sublink in sublinks:
+                    print(sublink)
+                    soup = BeautifulSoup(self.getPageContent(sublink), "lxml")
+                    complete_program_content = soup.findAll("title")[0].get_text() + ": "
+                    if soup.find("div", self.getContentClassOrID(university)) == None:
+                        continue
+                    program_content = soup.find("div", self.getContentClassOrID(university)).findAll('p')
 
-                print(complete_program_content)
+                    for item in program_content:
+                        complete_program_content = complete_program_content + item.get_text()
 
-                all_universities_programs[university].append(complete_program_content + ' ' + sublink)
+                    print(complete_program_content)
+                    all_universities_programs[university].append(complete_program_content + ' ' + sublink)
+            elif university == "UIUC":
+                for sublink in sublinks:
+                    soup = BeautifulSoup(self.getPageContent(sublink), "lxml")
+                    complete_program_content = soup.findAll("title")[0].get_text() + ": "
+                    complete_program_content = complete_program_content + soup.findAll('p')[1].get_text()
+                    print(complete_program_content)
+                    all_universities_programs[university].append(complete_program_content + ' ' + sublink)
             
         return all_universities_programs
 
@@ -97,10 +105,12 @@ class ProgramScraper:
 if __name__ == "__main__":
     program_scraper = ProgramScraper()
     all_universities_programs = program_scraper.scrapeAllPages()
-
-    print(all_universities_programs["UIUC"])
+    #print(all_universities_programs["UIUC"])
+   
+    with open('program_catalogs/GATECH.pickle', 'wb') as handle:
+        pickle.dump(all_universities_programs['GATECH'], handle, protocol=pickle.HIGHEST_PROTOCOL)
+    
 
     with open('program_catalogs/UIUC.pickle', 'wb') as handle:
         pickle.dump(all_universities_programs['UIUC'], handle, protocol=pickle.HIGHEST_PROTOCOL)
-
    
