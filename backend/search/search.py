@@ -11,22 +11,24 @@ def load_ranker():
 def get_relevant_docs(input_query, top_k):
     ranker = load_ranker()
 
-    with open('config-search.toml', 'r') as fin:
+    with open('search/config-search.toml', 'r') as fin:
         cfg_d = pytoml.load(fin)
 
     query_cfg = cfg_d['query-runner']
 
-    idx = metapy.index.make_inverted_index('config-search.toml')
+    idx = metapy.index.make_inverted_index('search/config-search.toml')
 
     query = metapy.index.Document()
 
     print('Running course query')
     query.content(input_query.strip())
+    print('Successfully ran query.content')
     results = ranker.score(idx, query, top_k)
+    print('got results of {}'.format(len(results)))
     content_results = []
     for item in results:
         content_results.append(idx.metadata(item[0]).get('content'))
-
+    print('got content results of {}'.format(content_results))
     return content_results
 
 if __name__ == '__main__':
