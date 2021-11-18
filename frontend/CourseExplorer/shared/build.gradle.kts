@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 plugins {
     kotlin("multiplatform")
-    kotlin("plugin.serialization") version "1.5.31"
+    kotlin("plugin.serialization")
 }
 
 kotlin {
@@ -15,7 +15,7 @@ kotlin {
         val commonMain by getting{
             dependencies {
                 implementation("io.ktor:ktor-client-core:1.6.4")
-
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.1")
 
 
                 //implementation(Deps.Kotlinx.serializationJson)
@@ -43,7 +43,7 @@ kotlin {
         }
         val jsMain by getting{
             dependencies {
-                implementation("io.ktor:ktor-client-js:1.6.4")
+                //implementation("io.ktor:ktor-client-js:1.6.4")
             }
         }
         val jsTest by getting

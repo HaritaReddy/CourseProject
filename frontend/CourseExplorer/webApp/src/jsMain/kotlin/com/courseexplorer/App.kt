@@ -23,7 +23,7 @@ fun main() {
     renderComposable(rootElementId = "root") {
         val currentState by viewModel.viewStates.collectAsState()
         when(currentState.pageType){
-            PageType.HOME -> HomeScreen(currentState, {viewModel.clearSearch()}, {viewModel.fetchResults(it)}, {viewModel.navigateToDetails(it)})
+            PageType.HOME -> HomeScreen(currentState, {viewModel.clearSearch()}, {viewModel.fetchResults(it, 20)}, {viewModel.navigateToDetails(it)})
             PageType.DETAIL -> DetailScreen(currentState)
         }
 
@@ -61,7 +61,9 @@ fun HomeScreen(
             Text("Clear")
         }
 
-        Button({onClick { onSubmitClicked(searchTerm) }}){
+        Button({onClick {
+            println("Search Clicked")
+            onSubmitClicked(searchTerm) }}){
             Text("Submit")
         }
     }

@@ -12,3 +12,4 @@ pluginManagement {
 include(":shared")
 //include(":desktopApp")
 include(":webApp")
+//enableFeaturePreview("GRADLE_METADATA")
