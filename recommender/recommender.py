@@ -2,6 +2,7 @@ import spacy
 import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
+import json
 
 
 class Recommender:
@@ -34,7 +35,7 @@ class Recommender:
         #print(self.df[['text']].iloc[best_indices])
         return self.df.iloc[best_indices]
 
-    def recommend_courses(self, query_sentences=['computer science', 'data mining', 'machine learning']):
+    def recommend_programs(self, query_sentences=['computer science', 'data mining', 'machine learning']):
         best_rows = self.recommend(query_sentences, 3)
         idx = 1
         return_dict = {}
@@ -42,6 +43,4 @@ class Recommender:
             return_dict[idx] = {'program_name': row['name'], 'university': row['university'], 'description': row['text'], 'link': row['link']}
             idx = idx + 1
 
-        return return_dict
-
-    
+        return json.dumps(return_dict)
