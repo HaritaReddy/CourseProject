@@ -15,3 +15,12 @@ university_course_pages = {
     "CUB": 'https://catalog.colorado.edu/courses-a-z/',
     "NE": 'http://catalog.northeastern.edu/course-descriptions/'
 }
+
+
+# Dictionary to map university name to program pages
+university_program_pages = {
+    'UIUC': ('http://catalog.illinois.edu/undergraduate-programs/', {'id': 'atozindex'}, {'id': 'textcontainer'}),
+    'GATECH': ('https://catalog.gatech.edu/programs/', {'id': 'alltextcontainer'}, {'id': 'bodyt'})
+}
+
+
