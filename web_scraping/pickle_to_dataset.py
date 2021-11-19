@@ -16,7 +16,7 @@ for file in files:
 
 
 #dat_file = open("courses.dat", "w")
-dat_file = open("programs.dat", "w")
+dat_file = open("programs_v2.dat", "w")
 for element in course_list:
     dat_file.write(element.encode('utf-8') + "\n")
 

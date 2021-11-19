@@ -30,7 +30,7 @@ def get_relevant_docs(input_query, top_k):
     return content_results
 
 if __name__ == '__main__':
-    print(get_relevant_docs('spanish colonial rule', 5))
+    print(get_relevant_docs('spanish colonial rule', 5)[0])
 
     """
     print('Building or loading index...')
