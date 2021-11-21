@@ -4,6 +4,8 @@ import time
 import metapy
 import pytoml
 
+import config
+
 
 def load_ranker():
     return metapy.index.OkapiBM25(k1=1.524, k3=2.29)
@@ -20,16 +22,27 @@ def get_relevant_docs(input_query, top_k):
 
     query = metapy.index.Document()
 
-    print('Running course query')
+    #print('Running course query')
     query.content(input_query.strip())
-    print('Successfully ran query.content')
+    #print('Successfully ran query.content')
     results = ranker.score(idx, query, top_k)
-    print('got results of {}'.format(len(results)))
+    #print('got results of {}'.format(len(results)))
     content_results = []
     for item in results:
         content_results.append(idx.metadata(item[0]).get('content'))
-    print('got content results of {}'.format(content_results))
-    return content_results
+    #print('got content results of {}'.format(content_results))
+
+    complete_results = []
+    for item in content_results:
+        link = item.split(' ')[-1]
+        university = None 
+        for key, value in config.domain_to_university.items():
+            if key in link:
+                university = value[1]
+
+        complete_results.append({'course_content': item, 'link': link, 'university': university})
+        
+    return complete_results
 
 if __name__ == '__main__':
     print(get_relevant_docs('spanish colonial rule', 5))
