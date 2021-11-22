@@ -44,4 +44,4 @@ class MOOCSearch:
 if __name__ == '__main__':
     search = MOOCSearch()
     print("Searching for MOOCs")
-    print(search.get_relevant_moocs('text analytics', 5))
+    print(search.get_relevant_moocs('business', 5))

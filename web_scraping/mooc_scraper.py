@@ -6,7 +6,8 @@ import config
 
 class MOOCScraper:
     def __init__(self):
-        self.mooc_pages = [('UIUC', 'https://www.coursera.org/illinois')]
+        self.mooc_pages = [('UCI', 'https://www.coursera.org/uci'), ('UCB', 'https://www.coursera.org/boulder'), ('GATECH', 'https://www.coursera.org/gatech')]
+        #[('UIUC', 'https://www.coursera.org/illinois'), ('GATECH', 'https://www.coursera.org/gatech')]
 
     def getParentURL(self, url):
         url = url[:-1]
@@ -89,7 +90,7 @@ class MOOCScraper:
 if __name__ == "__main__":
     mooc_scraper = MOOCScraper()
     all_universities_moocs = mooc_scraper.scrapeAllPages()
-    with open('mooc_list.dat', 'w') as file:
+    with open('mooc_list.dat', 'a') as file:
         for key, value in all_universities_moocs.items():
             for item in value:
                 try:
