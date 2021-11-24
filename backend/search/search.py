@@ -3,6 +3,7 @@ import sys
 import time
 import metapy
 import pytoml
+import json
 
 import config
 
@@ -43,7 +44,12 @@ class Search:
 
             complete_results.append({'course_content': item, 'link': link, 'university': university})
         
-        return complete_results
+        complete_results_dict = {}
+
+        for i in range(0, len(complete_results)):
+            complete_results_dict[i+1] = complete_results[i]
+
+        return json.dumps(complete_results_dict)
 
 if __name__ == '__main__':
     search = Search()
