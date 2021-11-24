@@ -14,12 +14,12 @@ class Search:
     def get_relevant_courses(self, input_query, top_k):
         ranker = self.load_ranker()
 
-        with open('search/config-search-courses.toml', 'r') as fin:
+        with open('search/config-search.toml', 'r') as fin:
             cfg_d = pytoml.load(fin)
 
         query_cfg = cfg_d['query-runner']
 
-        idx = metapy.index.make_inverted_index('search/config-search-courses.toml')
+        idx = metapy.index.make_inverted_index('search/config-search.toml')
 
         query = metapy.index.Document()
 
