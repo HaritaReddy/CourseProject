@@ -16,7 +16,7 @@ kotlin {
             dependencies {
                 implementation("io.ktor:ktor-client-core:1.6.4")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.1")
-
+                implementation("io.ktor:ktor-client-serialization:1.6.4")
 
                 //implementation(Deps.Kotlinx.serializationJson)
                 //implementation(Deps.Ktor.clientCore)

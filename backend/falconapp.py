@@ -1,5 +1,6 @@
 import falcon
 from search.search import get_relevant_docs
+from recommender.recommender import Recommender
 
 
 class MainResource:
@@ -24,11 +25,22 @@ class SearchResource:
             resp.media = {'results': results}
             resp.status = falcon.HTTP_200
 
+class ProgramResource:
+    def on_get(self, req, resp):
+        query = req.params["q"]
+        program_recommender = Recommender()
+        results = program_recommender.recommend_programs(['computer science', 'data mining', 'machine learning'])
+        print('got recommender results = {}'.format(query))
+        resp.text = results
+        resp.status = falcon.HTTP_200
 
 
-app = falcon.App()
+
+app = falcon.App(cors_enable=True)
 searchResource = SearchResource()
 mainResource = MainResource()
+programResource = ProgramResource()
 app.add_route('/search', searchResource)
 app.add_route('/main', mainResource)
+app.add_route('/recommend', programResource)
 app.add_static_route('/', '/code/static')
