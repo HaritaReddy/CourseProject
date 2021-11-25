@@ -8,11 +8,13 @@ import kotlin.collections.get
 
 class BackendClient {
 
-    private val client = HttpClient(){
+    private val client = HttpClient()/*{
         install(JsonFeature){
-            serializer = KotlinxSerializer()
+            serializer = KotlinxSerializer(kotlinx.serialization.json.Json {
+                isLenient = true
+            })
         }
-    }
+    }*/
    // private val address = Url("https://cors-test.appspot.com/test")
 
     suspend fun init(){
@@ -20,9 +22,8 @@ class BackendClient {
         client.post<Unit>(path = "/init")
     }
 
-    suspend fun search(term: String, maxResults: Int): List<String> {
-
-        val result: List<String> = client.get(path = "/search") {
+    suspend fun search(term: String, maxResults: Int): String {
+        val result: String = client.get(path = "/search") {
             parameter("q", term)
             parameter("k", maxResults)
         }
@@ -30,9 +31,11 @@ class BackendClient {
         return result
     }
 
-    suspend fun recommend(term: String): List<String>{
-        val result: List<String> = client.get(path = "/recommend") {
-            parameter("q", term)
+    suspend fun recommend(term: String): String {
+        val result: String = client.get(path = "/recommend") {
+            parameter("q1", term)
+            parameter("q2", "science")
+            parameter("q3", "engineering")
         }
         return result
     }

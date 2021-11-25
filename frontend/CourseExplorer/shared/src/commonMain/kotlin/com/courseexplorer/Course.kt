@@ -1,14 +1,16 @@
 package com.courseexplorer
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class Course(
-    val id: String = "",
-    val courseNumber: String = "",
+    val university: String = "",
+    val link: String = "",
+    @SerialName("course_content")
     val courseDescription: String = "",
 ) {
     fun shortDescription(): String {
-        return if (courseDescription.isNotEmpty()) courseDescription.substring(0..30) + Typography.ellipsis else ""
+        return if (courseDescription.isNotEmpty()) courseDescription.substring(0..50) + Typography.ellipsis else ""
     }
 }

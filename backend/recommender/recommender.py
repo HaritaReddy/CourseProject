@@ -38,9 +38,11 @@ class Recommender:
     def recommend_programs(self, query_sentences=['computer science', 'data mining', 'machine learning']):
         best_rows = self.recommend(query_sentences, 3)
         idx = 1
-        return_dict = {}
+        #return_dict = {}
+        return_list = []
         for index, row in best_rows.iterrows():
-            return_dict[idx] = {'program_name': row['name'], 'university': row['university'], 'description': row['text'], 'link': row['link']}
-            idx = idx + 1
+            #return_dict[idx] = {'program_name': row['name'], 'university': row['university'], 'description': row['text'], 'link': row['link']}
+            return_list.append({'id': index, 'program_name': row['name'], 'university': row['university'], 'description': row['text'], 'link': row['link']})
+            #idx = idx + 1
 
-        return json.dumps(return_dict)
+        return json.dumps(return_list)
