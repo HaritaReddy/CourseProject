@@ -1,11 +1,12 @@
 package com.courseexplorer
 
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 
 class MainViewModel {
@@ -28,12 +29,32 @@ class MainViewModel {
 
 
         GlobalScope.launch {
-            val results = backendClient.search(searchTerm, maxResults)
-            println("Got results from backend")
-            println(results)
-            val courses = results.map { Json.decodeFromString<Course>(it) }
-            println(" about to send $courses")
-            _viewStates.tryEmit(ViewState(PageType.HOME, courses))
+
+            val courseResults = async {
+                backendClient.search(searchTerm, maxResults)
+            }
+
+            val programResults = async {
+                backendClient.recommend(searchTerm)
+            }
+
+
+            //println("Got courses from backend: ${courseResults.await()}")
+            //println("Got programs from backend: ${programResults.await()}")
+
+            val courses = Json.decodeFromString(ListSerializer(Course.serializer()), courseResults.await())
+            val programs = Json.decodeFromString(ListSerializer(Program.serializer()), programResults.await())
+            _viewStates.tryEmit(ViewState(PageType.HOME, courses, programs))
+
+            /*val courses = courseResults.await().map { Json.decodeFromString<Course>(it) }
+            val programs = programResults.await().map { Json.decodeFromString<Program>(it) }
+
+
+            println("Got courses from backend: $courses")
+            println("Got programs from backend: $programs")
+            println(" emitting new viewstate from viewmodel")
+            _viewStates.tryEmit(ViewState(PageType.HOME, courses, programs))
+             */
         }
     }
 
@@ -43,8 +64,8 @@ class MainViewModel {
         currentSelected = id //currently use course number
         currentState = viewStates.value
         //TODO: fetch additional info for course
-        val selectedCourse = Course(courseNumber = id, courseDescription = "the study of forces, their distribution, and their impact on building structure. Topics include: equilibrium of rigid bodies in two and three dimensions")
-        _viewStates.tryEmit(ViewState(PageType.DETAIL, emptyList(), selectedCourse))
+        val selectedCourse = Course(link = id, courseDescription = "the study of forces, their distribution, and their impact on building structure. Topics include: equilibrium of rigid bodies in two and three dimensions")
+        _viewStates.tryEmit(ViewState(PageType.DETAIL, emptyList(), emptyList(), selectedCourse))
 
 
 

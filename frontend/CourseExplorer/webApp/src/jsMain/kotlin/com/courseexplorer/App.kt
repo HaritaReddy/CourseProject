@@ -73,11 +73,18 @@ fun HomeScreen(
             for (currentCourse in currentState.courseList){
                 Li({
                     onClick {
-                        onItemClicked(currentCourse.courseNumber) //maybe use course id instead
+                        onItemClicked(currentCourse.link) //maybe use course id instead
                     }
                 }) {
-                    Text("Curse Num: ${currentCourse.courseNumber}")
                     Text(currentCourse.shortDescription())
+                }
+            }
+        }
+        Ul {
+            for (currentProgram in currentState.programList){
+                Li {
+                    Text(currentProgram.programName)
+                    Text(currentProgram.link)
                 }
             }
         }
@@ -88,9 +95,9 @@ fun HomeScreen(
 fun DetailScreen(currentState: ViewState){
 
     val newURL = with(window.location){
-        "${protocol}//${host}/${currentState.courseDetail!!.courseNumber}"
+        "${protocol}//${host}/${currentState.courseDetail!!.link}"
     }
-    window.history.pushState(currentState.pageType, "${currentState.courseDetail!!.courseNumber} course details", newURL)
+    window.history.pushState(currentState.pageType, "${currentState.courseDetail!!.link} course details", newURL)
 
-    Text("Hello world ${currentState.courseDetail!!.courseNumber}")
+    Text("Hello world ${currentState.courseDetail!!.link}")
 }

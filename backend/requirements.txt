@@ -1,5 +1,12 @@
-metapy
-pytoml
+setuptools
+wheel
 pybind11
+cython
 falcon
 gunicorn
+pandas
+numpy
+sklearn
+pytoml
+metapy
+spacy
