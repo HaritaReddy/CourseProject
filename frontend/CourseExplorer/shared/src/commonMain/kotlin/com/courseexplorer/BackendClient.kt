@@ -31,11 +31,20 @@ class BackendClient {
         return result
     }
 
-    suspend fun recommend(term: String): String {
+    suspend fun mooc(term: String, maxResults: Int): String {
+        val result: String = client.get(path = "/mooc") {
+            parameter("q", term)
+            parameter("k", maxResults)
+        }
+
+        return result
+    }
+
+    suspend fun recommend(terms: List<String>): String {
         val result: String = client.get(path = "/recommend") {
-            parameter("q1", term)
-            parameter("q2", "science")
-            parameter("q3", "engineering")
+            parameter("q1", terms[0])
+            parameter("q2", terms[1])
+            parameter("q3", terms[2])
         }
         return result
     }

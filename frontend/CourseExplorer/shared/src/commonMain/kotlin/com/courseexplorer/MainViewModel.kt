@@ -14,13 +14,14 @@ class MainViewModel {
 
     private var backendClient: BackendClient = BackendClient()
     private var currentSelected: String? = null
-    private var currentState: ViewState = ViewState(PageType.HOME, emptyList())
+    private var currentState: ViewState = ViewState(PageType.HOME, emptyList(), emptyList())
+    private val previousSearches = mutableListOf<String>()
     private val _viewStates = MutableStateFlow(currentState)
     val viewStates: StateFlow<ViewState> = _viewStates.asStateFlow()
 
 
     fun fetchResults(searchTerm: String, maxResults: Int){
-        println("Got search request")
+       // println("Got search request")
        /* val fakeList = listOf(
             Course(courseNumber = "CS100", courseDescription = "the study of forces, their distribution, and their impact on building structure. Topics include: equilibrium of rigid bodies in two and three dimensions"),
             Course(courseNumber = "ECE100", courseDescription = "This course explores the theoretical and practical foundations of architecture and the built environment. It provides an introduction to the architectural graphic communication skills that architects"),
@@ -28,47 +29,49 @@ class MainViewModel {
         )*/
 
 
+        if (previousSearches.size == 0){
+            previousSearches.add(searchTerm)
+            previousSearches.add(searchTerm)
+            previousSearches.add(searchTerm)
+        }else{
+            previousSearches.add(0, searchTerm)
+            previousSearches.removeLast()
+        }
+
         GlobalScope.launch {
 
             val courseResults = async {
                 backendClient.search(searchTerm, maxResults)
             }
 
+            val moocResults = async {
+                backendClient.mooc(searchTerm, maxResults)
+            }
+
             val programResults = async {
-                backendClient.recommend(searchTerm)
+                backendClient.recommend(previousSearches.toList())
             }
 
 
             //println("Got courses from backend: ${courseResults.await()}")
-            //println("Got programs from backend: ${programResults.await()}")
+            //println("Got moocs from backend: ${moocResults.await()}")
 
             val courses = Json.decodeFromString(ListSerializer(Course.serializer()), courseResults.await())
+                .sortedWith(compareBy({it.university}, {it.shortDescription(10)}))
+            val moocs = Json.decodeFromString(ListSerializer(Course.serializer()), moocResults.await())
+                //.sortedWith(compareBy({it.university}, {it.shortDescription(10)}))
             val programs = Json.decodeFromString(ListSerializer(Program.serializer()), programResults.await())
-            _viewStates.tryEmit(ViewState(PageType.HOME, courses, programs))
-
-            /*val courses = courseResults.await().map { Json.decodeFromString<Course>(it) }
-            val programs = programResults.await().map { Json.decodeFromString<Program>(it) }
-
-
-            println("Got courses from backend: $courses")
-            println("Got programs from backend: $programs")
-            println(" emitting new viewstate from viewmodel")
-            _viewStates.tryEmit(ViewState(PageType.HOME, courses, programs))
-             */
+                .sortedBy { it.university }.groupBy { it.university }
+            _viewStates.tryEmit(ViewState(PageType.HOME, courses, moocs, programs))
         }
     }
-
-
 
     fun navigateToDetails(id: String){
         currentSelected = id //currently use course number
         currentState = viewStates.value
         //TODO: fetch additional info for course
         val selectedCourse = Course(link = id, courseDescription = "the study of forces, their distribution, and their impact on building structure. Topics include: equilibrium of rigid bodies in two and three dimensions")
-        _viewStates.tryEmit(ViewState(PageType.DETAIL, emptyList(), emptyList(), selectedCourse))
-
-
-
+        _viewStates.tryEmit(ViewState(PageType.DETAIL, emptyList(), emptyList(), emptyMap(), selectedCourse))
     }
 
     fun navigateBackHome(){
@@ -76,6 +79,6 @@ class MainViewModel {
     }
 
     fun clearSearch(){
-        _viewStates.tryEmit(ViewState(PageType.HOME,emptyList()))
+        _viewStates.tryEmit(ViewState(PageType.HOME,emptyList(), emptyList()))
     }
 }

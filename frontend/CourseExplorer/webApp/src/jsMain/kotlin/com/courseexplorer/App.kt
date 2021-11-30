@@ -68,23 +68,60 @@ fun HomeScreen(
         }
     }
 
-    Div({classes("courseList")}){
+    Div({classes("oncampuscourse")}){
+        Text("On Campus Courses")
         Ul {
-            for (currentCourse in currentState.courseList){
-                Li({
-                    onClick {
-                        onItemClicked(currentCourse.link) //maybe use course id instead
+            for ((university, courses) in currentState.courseList.groupBy { it.university }){
+                Li {
+                    Text(university!!) // every course should have a university
+                    Ul {
+                        for (course in courses){
+                            Li({
+                                onClick {
+                                    onItemClicked(course.link) //maybe use course id instead
+                                }
+                            }) {
+                                Text(course.shortDescription(100))
+                            }
+                        }
                     }
-                }) {
-                    Text(currentCourse.shortDescription())
                 }
             }
         }
-        Ul {
-            for (currentProgram in currentState.programList){
-                Li {
-                    Text(currentProgram.programName)
-                    Text(currentProgram.link)
+
+        Div({classes("mooccourse")}){
+            Text("MOOC's")
+            Ul {
+                for (currentMoocs in currentState.moocList){
+                    Li({
+                        onClick {
+                            onItemClicked(currentMoocs.link) //maybe use course id instead
+                        }
+                    }) {
+                        Text(currentMoocs.shortDescription(100))
+                    }
+                }
+            }
+        }
+
+        Div({classes("recommedprogram")}){
+            Text("Recommended Programs")
+            Ul {
+                for ((university, programs) in currentState.programList){
+                    Li{
+                        Text(university)
+                        Ul {
+                            for (program in programs){
+                                Li({
+                                    onClick {
+                                        onItemClicked(program.link) //maybe use course id instead
+                                    }
+                                }) {
+                                    Text(program.programName)
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
