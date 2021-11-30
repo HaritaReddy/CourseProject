@@ -10,4 +10,5 @@ RUN pip3 install -U -r requirements.txt
 #RUN sudo python3 -m spacy download en_core_web_lg
 EXPOSE 80
 COPY . /code/
-CMD ["gunicorn", "-b", "0.0.0.0:80", "falconapp:app"]
+#CMD ["gunicorn", "-b", "0.0.0.0:80", "falconapp:app"]
+CMD ["python", "falconapp.py"]
