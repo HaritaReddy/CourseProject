@@ -5,8 +5,16 @@ Please fork this repository and paste the github link of your fork on Microsoft 
 
 # Running Projects
 
-## Backend
-The backend is contained in a docker container and can be ran on your local desktop computer or in the cloud on any cloud provider that provides docker (pretty much all of them). The instructions below is just for running the server locally on your computer.
+## Via Python
+Open terminal and go to the *backend* folder of this project. From within this project run the following
+1. install https://github.com/explosion/spacy-models/releases/download/en_core_web_lg-3.2.0/en_core_web_lg-3.2.0.tar.gz
+2. pip3 install -U -r requirements.txt
+3. python falconapp.py
+
+In about a minute, you should be able to go to [http://localhost/main](http://localhost/main) and see the site
+
+## Via Docker
+The backend is also contained in a docker container and can be ran on your local docker environment or in the cloud on any cloud provider that provides docker (pretty much all of them). The instructions below is just for running the server locally on your computer.
 
 Go to the *backend* folder and run *docker-compose up -d*. In about a minute, you should be able to go to [http://localhost/main](http://localhost/main) and see the site
 

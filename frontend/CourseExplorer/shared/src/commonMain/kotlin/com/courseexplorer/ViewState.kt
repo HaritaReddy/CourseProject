@@ -3,6 +3,7 @@ package com.courseexplorer
 data class ViewState(
     val pageType: PageType,
     val courseList: List<Course>,
-    val programList: List<Program> = emptyList(),
+    val moocList: List<Course>,
+    val programList: Map<String, List<Program>> = emptyMap(),
     val courseDetail: Course? = null
 )

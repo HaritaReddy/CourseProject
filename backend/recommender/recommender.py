@@ -18,10 +18,12 @@ class Recommender:
         """
         self.df = pd.read_csv("recommender/program_catalogs.tsv", sep='\t')
         #self.df['text'] = unicode(self.df['text'], "utf-8")
-        print(self.df)
+        #print(self.df)
+        print("Initializing Recommender...")
         self.model = spacy.load("en_core_web_lg") 
         self.df['spacy_text'] = self.df['text'].apply(lambda x: self.model(x)) 
         self.word_embedding_matrix = self.df['spacy_text'].values
+        print("Recommender finished initializing")
 
 
     def recommend(self, query_sentences, top_k):
