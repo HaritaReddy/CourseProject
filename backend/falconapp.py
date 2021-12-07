@@ -3,6 +3,7 @@ from search.search import Search
 from moocs.mooc_search import MOOCSearch
 from recommender.recommender import Recommender
 from wsgiref.simple_server import make_server
+import os
 
 
 mainSearch = Search()
@@ -70,7 +71,7 @@ app.add_route('/search', searchResource)
 app.add_route('/mooc', moocResource)
 app.add_route('/main', mainResource)
 app.add_route('/recommend', programResource)
-app.add_static_route('/', '/code/static')
+app.add_static_route('/', os.path.abspath('static'))
 
 if __name__ == '__main__':
     with make_server('', 80, app) as httpd:
