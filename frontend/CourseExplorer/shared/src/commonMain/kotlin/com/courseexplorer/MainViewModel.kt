@@ -13,10 +13,11 @@ class MainViewModel {
 
 
     private var backendClient: BackendClient = BackendClient()
-    private var currentSelected: String? = null
-    private var currentState: ViewState = ViewState(PageType.HOME, emptyList(), emptyList())
+    //private var currentSelected: String? = null
+    private var currentState: ViewState = ViewState(PageType.HOME, emptyList(), emptyList(), emptyMap(), emptyList())
     private val previousSearches = mutableListOf<String>()
     private val _viewStates = MutableStateFlow(currentState)
+    //private var courseMap: Map<String, Course> = mutableMapOf()
     val viewStates: StateFlow<ViewState> = _viewStates.asStateFlow()
 
 
@@ -59,19 +60,24 @@ class MainViewModel {
             val courses = Json.decodeFromString(ListSerializer(Course.serializer()), courseResults.await())
                 .sortedWith(compareBy({it.university}, {it.shortDescription(10)}))
             val moocs = Json.decodeFromString(ListSerializer(Course.serializer()), moocResults.await())
-                //.sortedWith(compareBy({it.university}, {it.shortDescription(10)}))
+                .sortedWith(compareBy({it.university}, {it.shortDescription(10)}))
+            val universityList = (courses + moocs).mapNotNull { it.university }.toSet().toList()
             val programs = Json.decodeFromString(ListSerializer(Program.serializer()), programResults.await())
                 .sortedBy { it.university }.groupBy { it.university }
-            _viewStates.tryEmit(ViewState(PageType.HOME, courses, moocs, programs))
+
+            println("Coursers are......")
+            println(courses.joinToString())
+            //courseMap = (courses + moocs).map { it.link to it }.toMap()
+
+            _viewStates.tryEmit(ViewState(PageType.HOME, courses, moocs, programs, universityList, null))
         }
     }
 
-    fun navigateToDetails(id: String){
-        currentSelected = id //currently use course number
+    fun navigateToDetails(course: Course){
+        //currentSelected = id
         currentState = viewStates.value
-        //TODO: fetch additional info for course
-        val selectedCourse = Course(link = id, courseDescription = "the study of forces, their distribution, and their impact on building structure. Topics include: equilibrium of rigid bodies in two and three dimensions")
-        _viewStates.tryEmit(ViewState(PageType.DETAIL, emptyList(), emptyList(), emptyMap(), selectedCourse))
+        //val selectedCourse = courseMap[id]!!
+        _viewStates.tryEmit(ViewState(PageType.DETAIL, emptyList(), emptyList(), emptyMap(), emptyList(), course))
     }
 
     fun navigateBackHome(){
@@ -79,6 +85,6 @@ class MainViewModel {
     }
 
     fun clearSearch(){
-        _viewStates.tryEmit(ViewState(PageType.HOME,emptyList(), emptyList()))
+        _viewStates.tryEmit(ViewState(PageType.HOME,emptyList(), emptyList(), emptyMap(), emptyList()))
     }
 }

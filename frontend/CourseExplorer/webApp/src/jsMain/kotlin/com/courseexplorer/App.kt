@@ -2,8 +2,10 @@ package com.courseexplorer
 
 import androidx.compose.runtime.*
 import kotlinx.browser.window
+import org.jetbrains.compose.web.attributes.ATarget
 import org.jetbrains.compose.web.attributes.InputType
 import org.jetbrains.compose.web.attributes.placeholder
+import org.jetbrains.compose.web.attributes.target
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.*
 import org.jetbrains.compose.web.renderComposable
@@ -35,7 +37,7 @@ fun HomeScreen(
     currentState: ViewState,
     onClearClicked: () -> Unit,
     onSubmitClicked: (String) -> Unit,
-    onItemClicked: (String) -> Unit){
+    onCourseClicked: (Course) -> Unit){
     var searchTerm : String by  remember { mutableStateOf("")}
     Div({
         classes("topnav")
@@ -68,20 +70,48 @@ fun HomeScreen(
         }
     }
 
-    Div({classes("oncampuscourse")}){
-        Text("On Campus Courses")
+    Div({classes("courses")}){
+        Br()
+        if (currentState.universities.isNotEmpty()){
+            B {
+                Text("Courses")
+            }
+        }
         Ul {
-            for ((university, courses) in currentState.courseList.groupBy { it.university }){
+            for ((index, university) in currentState.universities.withIndex()){
                 Li {
-                    Text(university!!) // every course should have a university
+                    Text(university) // every course should have a university
+                    val currentOnCampus = currentState.courseList.filter { it.university == university }
+                    val currentMoocs = currentState.moocList.filter { it.university == university }
+
                     Ul {
-                        for (course in courses){
-                            Li({
-                                onClick {
-                                    onItemClicked(course.link) //maybe use course id instead
+                        if (currentOnCampus.isNotEmpty()){
+                            Li {  Text("On Campus Courses") }
+                            Ul {
+                                for (course in currentOnCampus){
+                                    Li({
+                                        onClick {
+                                            onCourseClicked(course) //maybe use course id instead
+                                        }
+                                    }) {
+                                        Text(course.shortDescription(100))
+                                    }
                                 }
-                            }) {
-                                Text(course.shortDescription(100))
+                            }
+                        }
+
+                        if (currentMoocs.isNotEmpty()){
+                            Li {Text("MOOC's")}
+                            Ul {
+                                for (currentMooc in currentMoocs){
+                                    Li({
+                                        onClick {
+                                            onCourseClicked(currentMooc) //maybe use course id instead
+                                        }
+                                    }) {
+                                        Text(currentMooc.shortDescription(100))
+                                    }
+                                }
                             }
                         }
                     }
@@ -89,35 +119,32 @@ fun HomeScreen(
             }
         }
 
-        Div({classes("mooccourse")}){
-            Text("MOOC's")
-            Ul {
-                for (currentMoocs in currentState.moocList){
-                    Li({
-                        onClick {
-                            onItemClicked(currentMoocs.link) //maybe use course id instead
-                        }
-                    }) {
-                        Text(currentMoocs.shortDescription(100))
-                    }
+        Div({classes("recommedprogram")}){
+            if (currentState.programList.isNotEmpty()){
+                B {
+                    Text("Recommended Programs")
                 }
             }
-        }
-
-        Div({classes("recommedprogram")}){
-            Text("Recommended Programs")
             Ul {
                 for ((university, programs) in currentState.programList){
                     Li{
                         Text(university)
                         Ul {
                             for (program in programs){
-                                Li({
+                                Li(/*{
                                     onClick {
                                         onItemClicked(program.link) //maybe use course id instead
                                     }
-                                }) {
+                                }*/) {
                                     Text(program.programName)
+                                    Br()
+                                    Text(program.description)
+                                    Br()
+                                    A(href = program.link, attrs = {
+                                        target(ATarget.Blank)
+                                    }){
+                                        Text( "Visit Home Page")
+                                    }
                                 }
                             }
                         }
@@ -132,9 +159,18 @@ fun HomeScreen(
 fun DetailScreen(currentState: ViewState){
 
     val newURL = with(window.location){
-        "${protocol}//${host}/${currentState.courseDetail!!.link}"
+        "${protocol}//${host}/${currentState.courseDetail!!.link.drop(7)}"
     }
     window.history.pushState(currentState.pageType, "${currentState.courseDetail!!.link} course details", newURL)
 
-    Text("Hello world ${currentState.courseDetail!!.link}")
+    Text( currentState.courseDetail!!.university!!)
+    P {  }
+    Text( currentState.courseDetail!!.courseDescription.dropLast(currentState.courseDetail!!.link.length))
+    P {  }
+    A(href = currentState.courseDetail!!.link, attrs = {
+        target(ATarget.Blank)
+    }){
+        Text( "Visit Home Page")
+    }
+
 }
