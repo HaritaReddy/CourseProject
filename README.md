@@ -1,7 +1,7 @@
-### Course Topic Explorer
-### CS 410 Project (Free Topic)
+# Course Topic Explorer
+# CS 410 Project (Free Topic)
 
-# Harita Reddy (haritar2), Eric Crawford (ecraw3)
+### Harita Reddy (haritar2), Eric Crawford (ecraw3)
 
 ## OVERVIEW
 
@@ -13,8 +13,8 @@ The main functionalities provided by our code to the user are:
 1. Search for courses from US universities. This is implemented through the functions in backend/search folder. get_relevant_courses is the function that needs to be called in order to get the relevant course documents for a given keyword query.
 2. Get relevant MOOCs on Coursera offered by these universities for the searched keyword. This is implemented through the functions in backend/moocs folder. get_relevant_moocs is the function that needs to be called in order to get the relevant mooc documents for a given keyword query.
 3. Recommend specific programs from different universities based on the history of keyword searches. The functions pertaining to this are implemented in backend/recommender. recommend_programs is the function that needs to be called to get the top 3 recommended programs based on the user’s search history (last three searches).
-4. 
-We scraping was done once to get all the required courses. The functions are implemented in web_scraping folder.
+
+Web scraping was done once to get all the required courses. The functions are implemented in web_scraping folder.
 
 ## VIDEO TUTORIAL
 https://drive.google.com/file/d/1TIVTnXw6UoFsDHuBOFQaSl5DA8uokhr6/view?usp=sharing
