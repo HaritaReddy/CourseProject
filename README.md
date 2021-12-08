@@ -1,27 +1,30 @@
-# CourseProject
+### Course Topic Explorer
+### CS 410 Project (Free Topic)
 
-Please fork this repository and paste the github link of your fork on Microsoft CMT. Detailed instructions are on Coursera under Week 1: Course Project Overview/Week 9 Activities.
+# Harita Reddy (haritar2), Eric Crawford (ecraw3)
 
+## OVERVIEW
 
-# Running Projects
+The aim of this project was to build a comprehensive search system for students looking for the different courses that US universities are offering. We implemented a search engine with some recommendation features built based on the users’ recent search history. The major component of this project is the search feature, which the students can use to get the courses and MOOCs relevant to the keywords they enter. An advanced feature is a simple recommendation system that will recommend suitable programs that the student can apply to get knowledge on the topics they have been searching for.
 
-## Via Python
-Open terminal and go to the *backend* folder of this project. From within this project run the following
-1. install https://github.com/explosion/spacy-models/releases/download/en_core_web_lg-3.2.0/en_core_web_lg-3.2.0.tar.gz
-2. pip3 install -U -r requirements.txt
-3. python falconapp.py
+## FUNCTIONALITY
 
-In about a minute, you should be able to go to [http://localhost/main](http://localhost/main) and see the site
+The main functionalities provided by our code to the user are:
+1. Search for courses from US universities. This is implemented through the functions in backend/search folder. get_relevant_courses is the function that needs to be called in order to get the relevant course documents for a given keyword query.
+2. Get relevant MOOCs on Coursera offered by these universities for the searched keyword. This is implemented through the functions in backend/moocs folder. get_relevant_moocs is the function that needs to be called in order to get the relevant mooc documents for a given keyword query.
+3. Recommend specific programs from different universities based on the history of keyword searches. The functions pertaining to this are implemented in backend/recommender. recommend_programs is the function that needs to be called to get the top 3 recommended programs based on the user’s search history (last three searches).
+4. 
+We scraping was done once to get all the required courses. The functions are implemented in web_scraping folder.
 
-## Via Docker
-The backend is also contained in a docker container and can be ran on your local docker environment or in the cloud on any cloud provider that provides docker (pretty much all of them). The instructions below is just for running the server locally on your computer.
+## VIDEO TUTORIAL
+https://drive.google.com/file/d/1TIVTnXw6UoFsDHuBOFQaSl5DA8uokhr6/view?usp=sharing
 
-Go to the *backend* folder and run *docker-compose up -d*. In about a minute, you should be able to go to [http://localhost/main](http://localhost/main) and see the site
+## INSTALLATION AND USAGE
 
-## Recommender
-To use spacy's en_core_web_lg, run the following command:
+The backend is also contained in a docker container and can be run on your local docker environment or in the cloud on any cloud provider that provides docker (pretty much all of them). The instructions below are just for running the server locally on your computer.
 
-python3 -m spacy download en_core_web_lg
+1. Clone the project and enter the project in your terminal.
+2. Install Docker if you don’t already have it (Docker for Mac)
+3. Run Docker Desktop. Wait for it to go to the running mode.
+4. Go to the backend folder and run docker-compose up -d. It might take a few minutes for the setup to happen, and then you should be able to go to http://localhost/main and see the site.
 
-If this throws a linking error in the end, try:
-sudo python3 -m spacy download en_core_web_lg
