@@ -1,5 +1,4 @@
-# Course Topic Explorer
-# CS 410 Project (Free Topic)
+# Course Topic Explorer: CS 410 Project (Free Topic)
 
 ### Harita Reddy (haritar2), Eric Crawford (ecraw3)
 
@@ -18,13 +17,14 @@ Web scraping was done once to get all the required courses. The functions are im
 
 ## VIDEO TUTORIAL
 https://drive.google.com/file/d/1TIVTnXw6UoFsDHuBOFQaSl5DA8uokhr6/view?usp=sharing
+If the above link is not accessible, try https://mediaspace.illinois.edu/media/t/1_kis3mddw.
 
 ## INSTALLATION AND USAGE
 
 The backend is also contained in a docker container and can be run on your local docker environment or in the cloud on any cloud provider that provides docker (pretty much all of them). The instructions below are just for running the server locally on your computer.
 
 1. Clone the project and enter the project in your terminal.
-2. Install Docker if you don’t already have it (Docker for Mac)
+2. Install Docker if you don’t already have it. Docker for Mac: https://docs.docker.com/desktop/mac/install/
 3. Run Docker Desktop. Wait for it to go to the running mode.
 4. Go to the backend folder and run docker-compose up -d. It might take a few minutes for the setup to happen, and then you should be able to go to http://localhost/main and see the site.
 
