@@ -17,6 +17,7 @@ Web scraping was done once to get all the required courses. The functions are im
 
 ## VIDEO TUTORIAL
 https://drive.google.com/file/d/1TIVTnXw6UoFsDHuBOFQaSl5DA8uokhr6/view?usp=sharing
+
 If the above link is not accessible, try https://mediaspace.illinois.edu/media/t/1_kis3mddw.
 
 ## INSTALLATION AND USAGE
