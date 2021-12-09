@@ -1,6 +1,9 @@
+
 # Course Topic Explorer: CS 410 Project (Free Topic)
 
 ### Harita Reddy (haritar2), Eric Crawford (ecraw3)
+
+## Please NOTE: This is not the complete report. Complete report is present in the Final Documentation PDF.
 
 ## OVERVIEW
 
