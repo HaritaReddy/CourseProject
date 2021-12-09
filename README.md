@@ -43,6 +43,7 @@ The backend is run via Falcon Python server framework. This framework allows us 
 
 The backend code is located in the backend folder. The important files/folders in this directory  are as follows:
 
+`
 **moocs**:  This folder contains all the code that is used for indexing and searching for courses that are moocs
 **recommender**: This folder contains all the code that is used for recommending/ranking the programs based on the search criteria.
 **search**: This folder contains all the code that is used for indexing and searching for courses that are on campus
@@ -50,6 +51,7 @@ The backend code is located in the backend folder. The important files/folders i
 **dockerfile**: The file used to create the docker image
 **docker-compose.yml**: The file used to spin up and run the application
 **falconapp.py**: the main file that runs the backend server. (do to issues with metapy, we prefer running this inside a docker image, which the docker-compose.yml file does for us)
+`
 
 The server exposes several APIs that can be used to retrieve the data. These can be called from any frontend application or manually in a browser or via cURL.
 
