@@ -30,7 +30,7 @@ The backend is also contained in a docker container and can be run on your local
 1. Clone the project and enter the project in your terminal (cd CourseProject).
 2. Install Docker if you don’t already have it (Docker Installation )
 3. Run Docker Desktop and wait for it to finish starting up.
-4. Go to the backend folder (cd backend) of this project and run docker-compose up. It might take a few minutes for the image to build and the container to be started. Your terminal will prompt you when the server is ready.
+4. Go to the backend folder (cd backend) of this project and run _docker-compose up_. It might take a few minutes for the image to build and the container to be started. Your terminal will prompt you when the server is ready.
 5. Go to http://localhost/main and see the site.
 6. When you are done using the application, type ctrl c on Windows or control c on Mac to terminate the docker container. You may also want to completely delete the container and image by following these instructions .
 
