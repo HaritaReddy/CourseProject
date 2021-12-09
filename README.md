@@ -192,6 +192,36 @@ language courses
 literature
 ```
 
+**Recommender Output by keyword**:
+
+The keywords are entered in order given below. Please note that the recommender results improve as we get more and more searches because the recommender takes into consideration that last three searches.
+```
+text analytics
+University of California, Los Angeles - Linguistics B.A.
+University of Illinois at Urbana-Champaign - Computer Science, BS
+University of Illinois at Urbana-Champaign - Accountancy, BS
+machine learning
+University of California, Los Angeles - Linguistics B.A.
+University of California, Los Angeles - Computer Science and Engineering B.S.
+University of Illinois at Urbana-Champaign - Computer Science, BS
+data mining
+University of California, Los Angeles - Computer Science B.S.
+University of California, Los Angeles - Computer Science and Engineering B.S.
+University of Illinois at Urbana-Champaign - Computer Science, BS
+english 
+Georgia Institute of Technology - Bachelor of Science in Applied Languages & Intercultural Studies
+University of California, Los Angeles - Computer Science B.S.
+University of California, Los Angeles - Computer Science and Engineering B.S.
+language courses
+Georgia Institute of Technology - Bachelor of Science in Global Economics and Modern Languages
+Georgia Institute of Technology - Bachelor of Science in Applied Languages & Intercultural Studies
+University of California, Los Angeles - Jewish Studies B.A.
+literature
+Georgia Institute of Technology - Bachelor of Science in Applied Languages & Intercultural Studies
+University of California, Los Angeles - Jewish Studies B.A. (major includes a Hebrew language component)
+University of Illinois at Urbana-Champaign - Germanic Studies, BALAS
+```
+
 ## SELF EVALUATION
 
 We have completed all the required features of this system and got the expected results. However, as always, there is definitely a scope for improvement. The areas in which we see scope for improvement and future extension are as follows:
