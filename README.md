@@ -168,3 +168,55 @@ Returns: A dataframe of top_k recommended documents (in this case, programs). Th
 
 This functions does the actual computation to get the top_k recommended documents. The computation is done using the concept of item similarity with the last three searches. The similarity score is computed using sklearn.metrics.pairwise.cosine_similarity.
 ```
+
+## MAIN RESULTS
+
+The following were the outcomes of the project:
+
+1. The user is able to go to the application, enter keywords and search for courses relevant to the keywords from different US universities.
+2. If the university also offers related MOOCs, these MOOCs are listed as well.
+3. Based on the user’s search history, the application recommends certain programs to the user.
+
+Search functionality is implemented using OkapiBM25 Ranker and the results of evaluation on the Cranfield Dataset for the chosen set of parameters is:
+NDCG@10: 0.359
+
+Our evaluation of the recommender was an empirical evaluation (since there is no gold standard to test against). We tried out our test cases and the recommender worked as expected.
+
+**Test Cases for Search Keywords**:
+```
+text analytics
+machine learning
+data mining
+english
+language courses
+literature
+```
+
+## SELF EVALUATION
+
+We have completed all the required features of this system and got the expected results. However, as always, there is definitely a scope for improvement. The areas in which we see scope for improvement and future extension are as follows:
+
+1. Improved Recommender System: The recommendation algorithm has a significant scope of improvement because it does not always return what we expect. In the future, we can investigate more into having more accurate methods of recommendation.
+2. Dataset Expansion: Due to the time constraints, we enabled to search and recommendation only for a few selected universities. In the future, we can extend the system to courses and programs from all US universities. However, one problem associated with this is the difficulty in scraping different university websites, which have different HTML class and id layouts.
+3. Optional Feature: We can implement the feature we had listed as optional in the proposal, namely, to display the department (school within a university) that is offering the course and rank the departments based on the number of courses that the department is offering related to the topic the student is looking for.
+
+## INDIVIDUAL CONTRIBUTIONS
+
+**Harita Reddy (haritar2)**
+
+~20-24 hours
+
+1. Scraping university websites for course catalogs and programs, storing them in the required format. 
+2. Creating a dataset of Coursera MOOCs offered by universities manually.
+3. Course search and MOOC search functions using the above datasets and the Cranfield datasets
+4. Recommender functions 
+
+**Eric Crawford (ecraw3)**
+
+24 hours
+
+1. Setting up the backend server. The work involved experimentation with Django and other frameworks and finally arriving a the Falcon framework which was able to work with Metapy
+2. Integrating search and recommendation features with the backend
+3. Implementing the frontend interface
+
+
