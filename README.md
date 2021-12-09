@@ -43,7 +43,7 @@ The backend is run via Falcon Python server framework. This framework allows us 
 
 The backend code is located in the backend folder. The important files/folders in this directory  are as follows:
 
-`
+```
 moocs:  This folder contains all the code that is used for indexing and searching for courses that are moocs
 
 recommender: This folder contains all the code that is used for recommending/ranking the programs based on the search criteria.
@@ -57,7 +57,7 @@ dockerfile: The file used to create the docker image
 docker-compose.yml: The file used to spin up and run the application
 
 falconapp.py: the main file that runs the backend server. (do to issues with metapy, we prefer running this inside a docker image, which the docker-compose.yml file does for us)
-`
+```
 
 The server exposes several APIs that can be used to retrieve the data. These can be called from any frontend application or manually in a browser or via cURL.
 
@@ -83,7 +83,7 @@ We have used Python’s BeautifulSoup and requests packages for scraping. Scrapi
 **class CourseScraper**:
 
 The university name to course catalog page mapping is present in web_scraping/config.py. 
-`
+```
 1. scrapeAllPages(self): 
 
 Returns: Dictionary with university id (such as ‘UIUC’, ‘GATECH’ etc as key and a list of courses as values. It iterates through the universities listed in the config.py file.
@@ -91,13 +91,10 @@ Returns: Dictionary with university id (such as ‘UIUC’, ‘GATECH’ etc as 
 This function calls multiple helper functions in the same class. Some of the functions are listed below:
 
 getSubLinks(self, page_content): Gets all the links (href) from the HTML page content
-
 getPageContent(self, url): Gets the page content given the url
-
 getPageURL(self, university_name): Given the university id, gets the corresponding main course catalog page url
-
 getParentURL(self, url): Gets the parent URL for a given URL. This is useful for appending the href link to the parent URL in order to visit the required page, because the href URL is relative to the parent URL.
-`
+```
 
 The main function runs the scrapeAllPages functions and writes the returned courses and their descriptions to pickle format. The pickle files were converted into dataset form suitable for search implementation.
 class MOOCScraper has similar functions.
@@ -106,42 +103,34 @@ class MOOCScraper has similar functions.
 
 There are two types of search in the backend, one being the course and search and the other being the MOOC search. Both of this are located in separated folders in the backend.
 
-`
+```
 backend/
 	search/ Contains the code to search for relevant courses offered by different universities based on keywords.
 	moocs/ Contains the code to search for relevant MOOCs offered by some universities based on the entered keywords.
 The ranker used for the course search and MOOC search implementation is ​​OkapiBM25 from Metapy.
-`
+```
 
 **class Search**:
 
-`
+```
 1. get_relevant_courses(self, input_query, top_k): 
-2. 
 input_query: A string of keywords entered by the user. Eg: ‘spanish colonial rule’
-
 top_k: Number of top relevant documents to be returned. Eg: 5
-
 Returns: List of dictionaries of format {'course_content': ..., 'link': ..., 'university': ...}
 
-
 For an input query and given top_k value that indicates how many relevant documents should be returned, the function returns the relevant documents in the form of list of dictionaries
-`
+```
 
 **class MOOCSearch**:
 
-`
+```
 1. get_relevant_moocs(self, input_query, top_k): 
-
 input_query: A string of keywords entered by the user. Eg: ‘spanish colonial rule’
-
 top_k: Number of top relevant documents to be returned. Eg: 5
-
 Returns: List of dictionaries of format {'course_content': ..., 'link': ..., 'university': ...}
 
-
 For an input query and given top_k value that indicates how many relevant documents should be returned, the function returns the relevant documents in the form of list of dictionaries
-`
+```
 
 ### Recommender
 
@@ -160,26 +149,19 @@ Contains all the functions required to recommend programs based on three input s
 
 Initialisation
 
-The initialisation step in the class reads the program descriptions from recommender/program_catalogs.tsv and loads SpaCy’s en_core_web_lg to create the required word embedding matrix.
+The initialisation step in the class reads the program descriptions from recommender/program_catalogs.tsv and loads SpaCy’s en_core_web_lg to create the required word embedding matrix. The other functions are as follows:
 
-`
+```
 1. recommend_programs(self, query_sentences=['computer science', 'data mining', 'machine learning']): 
-
 query_sentences: An array of three queries based on previous searches. Eg: ['computer science', 'data mining', 'machine learning'].
-
 Returns: JSON list of the format [{'id': ..., 'program_name': ..., 'university': ..., 'description': ..., 'link': ...}, …] which are basically the top 3 recommended programs based on queries provided
-
 
 The function calls the recommend(self, query_sentences, top_k) to get the top 3 recommended programs.
 
 2. recommend(self, query_sentences, top_k):
-
 query_sentences: An array of three queries based on previous searches. Eg: ['computer science', 'data mining', 'machine learning'].
-
 top_k: Number of top recommended documents to be returned
-
 Returns: A dataframe of top_k recommended documents (in this case, programs). The dataframe contains the columns 'name', 'university', 'description', 'link'.
 
-
 This functions does the actual computation to get the top_k recommended documents. The computation is done using the concept of item similarity with the last three searches. The similarity score is computed using sklearn.metrics.pairwise.cosine_similarity.
-`
+```
